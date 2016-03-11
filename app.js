@@ -11,7 +11,6 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -23,6 +22,7 @@ app.use(flash());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
@@ -36,6 +36,8 @@ app.use(session({
     url: 'mongodb://localhost/blog'
   })
 }));
+
+
 
 
 routes(app);
