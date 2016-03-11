@@ -1,10 +1,16 @@
 这是我按照[N-blog](https://github.com/nswbmw/N-blog)完成的小项目
 ###运行方法
->git clone https://github.com/ZZR-china/Node-blog
-cd Node-blog
-npm install 
-npm start
+<pre>
+<code>
+git clone https://github.com/ZZR-china/Node-blog
 
+cd Node-blog
+
+npm install 
+
+npm start
+</code>
+</pre>
 PS:请确保本地有mongodb且服务以开启！
 
 完成过程中遇到不少坑，尤其是各种模块的版本兼容问题，还好都解决
