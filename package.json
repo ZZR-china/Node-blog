@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "supervisor app.js"
+    "start": "supervisor app"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

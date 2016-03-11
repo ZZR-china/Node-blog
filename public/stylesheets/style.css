@@ -19,3 +19,5 @@ article a:hover{color:#333333;text-decoration:underline;}
 .nextpage a{float:right;text-decoration:none;padding:.5em 1em;color:#ff0000;font-weight:bold;}
 .prepage a:hover,.nextpage a:hover{text-decoration:none;background-color:#ff0000;color:#f9f9f9;-webkit-transition:color .2s linear;}
 .search{border:0;width:6em;text-align:center;font-size:1em;margin:0.5em 0;}
+.tag{background-color:#ff0000;border-radius:3px;font-size:14px;color:#ffffff;display:inline-block;padding:0 5px;margin-bottom:8px;}
+.tag:hover{text-decoration:none;background-color:#ffffff;color:#000000;-webkit-transition:color .2s linear;}
