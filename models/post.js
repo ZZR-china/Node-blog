@@ -20,7 +20,7 @@ Post.prototype.save = function(callback) {
       year : date.getFullYear(),
       month : date.getFullYear() + "-" + (date.getMonth() + 1),
       day : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
-      minute : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
+      minute : date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
       date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
   }
   //要存入数据库的文档
@@ -28,7 +28,7 @@ Post.prototype.save = function(callback) {
       name: this.name,
       head: this.head,
       time: time,
-      title: this.title,
+      title:this.title,
       tags: this.tags,
       post: this.post,
       comments: [],
@@ -150,7 +150,6 @@ Post.getOne = function(name, day, title, callback) {
   });
 };
 
-
 //返回原始发表的内容（markdown 格式）
 Post.edit = function(name, day, title, callback) {
   //打开数据库
@@ -211,8 +210,7 @@ Post.update = function(name, day, title, post, callback) {
   });
 };
 
-
-//删除一篇文章,同时删除转载信息
+//删除一篇文章
 Post.remove = function(name, day, title, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
@@ -311,44 +309,14 @@ Post.getArchive = function(callback) {
   });
 };
 
-//返回通过标题关键字查询的所有文章信息
-Post.search = function(keyword, callback) {
-  mongodb.open(function (err, db) {
-    if (err) {
-      return callback(err);
-    }
-    db.collection('posts', function (err, collection) {
-      if (err) {
-        mongodb.close();
-        return callback(err);
-      }
-      var pattern = new RegExp(keyword, "i");
-      collection.find({
-        "title": pattern
-      }, {
-        "name": 1,
-        "time": 1,
-        "title": 1
-      }).sort({
-        time: -1
-      }).toArray(function (err, docs) {
-        mongodb.close();
-        if (err) {
-         return callback(err);
-        }
-        callback(null, docs);
-      });
-    });
-  });
-};
-
-
 //返回所有标签
 Post.getTags = function(callback) {
+  //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
       return callback(err);
     }
+    //读取 posts 集合
     db.collection('posts', function (err, collection) {
       if (err) {
         mongodb.close();
@@ -365,7 +333,6 @@ Post.getTags = function(callback) {
     });
   });
 };
-
 
 //返回含有特定标签的所有文章
 Post.getTag = function(tag, callback) {
@@ -399,6 +366,36 @@ Post.getTag = function(tag, callback) {
   });
 };
 
+//返回通过标题关键字查询的所有文章信息
+Post.search = function(keyword, callback) {
+  mongodb.open(function (err, db) {
+    if (err) {
+      return callback(err);
+    }
+    db.collection('posts', function (err, collection) {
+      if (err) {
+        mongodb.close();
+        return callback(err);
+      }
+      var pattern = new RegExp(keyword, "i");
+      collection.find({
+        "title": pattern
+      }, {
+        "name": 1,
+        "time": 1,
+        "title": 1
+      }).sort({
+        time: -1
+      }).toArray(function (err, docs) {
+        mongodb.close();
+        if (err) {
+         return callback(err);
+        }
+        callback(null, docs);
+      });
+    });
+  });
+};
 
 //转载一篇文章
 Post.reprint = function(reprint_from, reprint_to, callback) {
@@ -469,7 +466,7 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
           if (err) {
             return callback(err);
           }
-          callback(err, post[0]);
+          callback(err, post.ops[0]);
         });
       });
     });
